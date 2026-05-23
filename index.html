@@ -1,0 +1,1136 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="public/DailyNotes-Icon.png" type="image/png" />
+    <title>Daily Notes - Website Resmi</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      /* --- CONFIG & VARIABEL --- */
+      :root {
+        --pink-primary: #ffcece;
+        --pink-soft: #fff5f5;
+        --pink-gradient: linear-gradient(
+          135deg,
+          #f9cece 0%,
+          #ffa7a7 100%
+        ); /* Modifikasi gradasi lembut untuk tombol */
+        --white: #ffffff;
+        --dark-text: #2d2123;
+        --gray-light: #f9f9f9;
+        --accent-dark: #ffaeae; /* Warna pendukung untuk border/teks agar kontras */
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: var(--dark-text);
+        background-color: var(--white);
+        overflow-x: hidden;
+      }
+
+      /* --- ANIMASI MOTION --- */
+      @keyframes floatUpDown {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      @keyframes pulseGlow {
+        0% {
+          box-shadow: 0 0 0 0 rgba(255, 206, 206, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 15px rgba(255, 206, 206, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(255, 206, 206, 0);
+        }
+      }
+
+      /* --- NAVBAR & RESPONSIVE BURGER --- */
+      header {
+        padding: 15px 8%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 206, 206, 0.3);
+      }
+
+      .logo {
+        font-family: "Fredoka", sans-serif;
+        font-size: 24px;
+        color: var(--accent-dark);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .nav-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 50;
+        top: 63px;
+      }
+
+      nav {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 63px;
+        right: -100%;
+        background-color: var(--white);
+        width: 70%;
+        height: calc(100vh - 63px);
+        padding: 40px;
+        gap: 30px;
+        box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.05);
+        transition: right 0.4s ease-in-out;
+        align-items: left;
+      }
+
+      nav.nav-active {
+        right: 0;
+      }
+
+      .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      nav a {
+        color: var(--dark-text);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 18px;
+        transition: color 0.3s;
+      }
+
+      nav a:hover {
+        color: var(--accent-dark);
+      }
+
+      #navMenu .navDownload {
+        background-color: var(--pink-primary);
+        border: 1px solid var(--pink-primary);
+        border-radius: 5px;
+        color: var(--dark-text);
+        padding: 3px 10px;
+        text-align: center;
+      }
+
+      #navMenu .navDownload:hover {
+        background-color: var(--white);
+        color: var(--accent-dark);
+        border-color: var(--accent-dark);
+      }
+
+      .burger-menu {
+        display: block;
+        cursor: pointer;
+        z-index: 1001;
+      }
+
+      .burger-menu div {
+        width: 28px;
+        height: 3px;
+        background-color: var(--dark-text);
+        margin: 6px;
+        transition: all 0.3s ease;
+        border-radius: 3px;
+      }
+
+      .burger-toggle .line1 {
+        transform: rotate(-45deg) translate(-6px, 6px);
+      }
+      .burger-toggle .line2 {
+        opacity: 0;
+      }
+      .burger-toggle .line3 {
+        transform: rotate(45deg) translate(-6px, -7px);
+      }
+
+      /* --- SPLIT TATA LETAK GRID (HERO & ABOUT US) --- */
+      .split-section {
+        min-height: 100vh;
+        padding: 140px 8% 60px 8%;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .hero {
+        background: linear-gradient(
+          180deg,
+          var(--pink-soft) 0%,
+          var(--white) 100%
+        );
+      }
+
+      .about-us {
+        background-color: var(--gray-light);
+      }
+
+      .section-text {
+        text-align: center;
+      }
+
+      .section-text h1,
+      .section-text h2 {
+        font-family: "Fredoka", sans-serif;
+        font-size: 36px;
+        line-height: 1.2;
+        margin-bottom: 20px;
+      }
+
+      .section-text h1 span,
+      .section-text h2 span {
+        color: var(--accent-dark);
+      }
+
+      .section-text p {
+        font-size: 15px;
+        color: #665557;
+        margin-bottom: 35px;
+      }
+
+      .section-visual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      /* Hero Visual Elements */
+      .mockup-container {
+        position: relative;
+        animation: floatUpDown 5s ease-in-out infinite;
+      }
+
+      .phone-mockup {
+        width: 190px;
+        height: 380px;
+        background: #2d2123;
+        border-radius: 32px;
+        border: 7px solid #3d3133;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .phone-screen {
+        width: 100%;
+        height: 100%;
+        background: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+      }
+
+      .phone-screen img {
+        height: 100%;
+      }
+
+      .app-logo-badge {
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        background: var(--white);
+        width: 100px;
+        height: 100px;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(255, 206, 206, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+      }
+
+      .btn-download {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--pink-gradient);
+        color: var(
+          --dark-text
+        ); /* Diubah ke gelap agar terbaca jelas di atas warna pastel */
+        padding: 15px 32px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        animation: pulseGlow 2s infinite;
+        transition: transform 0.2s;
+      }
+
+      .btn-download:hover {
+        transform: translateY(-3px);
+      }
+
+      /* --- FITUR-FITUR APLIKASI --- */
+      .features {
+        padding: 80px 8%;
+        background-color: var(--white);
+      }
+
+      .features h2 {
+        text-align: center;
+        font-family: "Fredoka", sans-serif;
+        font-size: 28px;
+        margin-bottom: 50px;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .feature-card {
+        background: var(--gray-light);
+        padding: 30px;
+        border-radius: 20px;
+        border-bottom: 4px solid transparent;
+        transition: all 0.4s ease;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .feature-card.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .feature-card:hover {
+        border-bottom-color: var(--accent-dark);
+        background: var(--pink-soft);
+      }
+
+      .feature-card i {
+        font-size: 28px;
+        color: var(--accent-dark);
+        margin-bottom: 15px;
+      }
+
+      .feature-card h3 {
+        font-family: "Fredoka", sans-serif;
+        margin-bottom: 10px;
+      }
+
+      /* --- CAROUSEL SCREENSHOT --- */
+      .screenshots {
+        padding: 80px 0;
+        background: var(--pink-soft);
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .screenshots h2 {
+        font-family: "Fredoka", sans-serif;
+        font-size: 28px;
+        margin-bottom: 40px;
+        padding: 0 20px;
+      }
+
+      .carousel-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+        padding: 0 60px;
+      }
+
+      .carousel-track-container {
+        overflow: hidden;
+        width: 100%;
+        padding: 25px 0;
+      }
+
+      .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .carousel-slide {
+        min-width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .screenshot-img {
+        width: 158px;
+        height: 340px;
+        background: var(--white);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: #aaa;
+        border: 4px solid #fff;
+        cursor: zoom-in; /* Menandakan gambar bisa diperbesar */
+        transition: transform 0.3s ease;
+      }
+
+      .screenshot-img:hover {
+        transform: scale(1.03);
+      }
+
+      .screenshot-img img {
+        height: 100%;
+        border-radius: 12px;
+      }
+
+      .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--white);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        color: var(--accent-dark);
+        font-size: 18px;
+        z-index: 10;
+      }
+
+      .carousel-btn-left {
+        left: 0;
+      }
+      .carousel-btn-right {
+        right: 0;
+      }
+
+      /* --- MODAL DETIL GAMBAR --- */
+      .image-modal {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(45, 33, 35, 0.7);
+        backdrop-filter: blur(7px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.3s ease,
+          visibility 0.3s ease;
+      }
+
+      .image-modal.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-content {
+        max-width: 90%;
+        max-height: 80vh;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+        border: 5px solid var(--white);
+      }
+
+      .image-modal.show .modal-content {
+        transform: scale(1);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 25px;
+        right: 35px;
+        color: var(--white);
+        font-size: 40px;
+        font-weight: 300;
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+
+      .modal-close:hover {
+        color: var(--accent-dark);
+      }
+
+      /* About Us Visual Carousel Elements */
+      .team-carousel-wrapper {
+        width: 280px;
+        height: 410px;
+        position: relative;
+        background: var(--white);
+        border-radius: 24px;
+        padding: 15px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .team-track-container {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+      }
+
+      .team-track {
+        display: flex;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .team-slide {
+        min-width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .team-photo-frame {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .team-photo-frame img {
+        width: 250px;
+        height: 250px;
+        object-fit: contain;
+        display: block;
+        filter: drop-shadow(0 8px 15px rgba(255, 206, 206, 0.2));
+      }
+
+      .team-slide h4 {
+        font-family: "Fredoka", sans-serif;
+        font-size: 20px;
+        color: var(--dark-text);
+        margin-bottom: 5px;
+      }
+
+      .team-slide p {
+        font-size: 14px;
+        color: var(--accent-dark);
+        font-weight: 600;
+      }
+
+      .team-slide a {
+        font-size: 12px;
+        color: var(--accent-dark);
+        font-weight: 600;
+      }
+
+      .team-dots {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        background: #ddd;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .dot.active {
+        background: var(--accent-dark);
+        width: 20px;
+        border-radius: 4px;
+      }
+
+      /* --- BOTTOM DOWNLOAD SECTION --- */
+      .bottom-cta {
+        padding: 90px 8%;
+        text-align: center;
+        background: var(--white);
+      }
+
+      .bottom-cta h2 {
+        font-family: "Fredoka", sans-serif;
+        font-size: 28px;
+        margin-bottom: 15px;
+      }
+
+      .bottom-cta p {
+        color: #665557;
+        margin-bottom: 30px;
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        background: #1a1213;
+        color: rgba(255, 255, 255, 0.6);
+        padding-block: 30px;
+        text-align: center;
+        font-size: 14px;
+      }
+
+      footer .love {
+        margin-top: 15px;
+      }
+
+      /* --- MEDIA QUERY: LAYAR LEBAR (TABLET & LAPTOP) --- */
+      @media (min-width: 768px) {
+        .nav-overlay {
+          display: none;
+        }
+
+        nav {
+          display: flex;
+          flex-direction: row;
+          position: static;
+          width: auto;
+          height: auto;
+          padding: 0;
+          box-shadow: none;
+          background: transparent;
+          align-items: center;
+          gap: 15px;
+        }
+
+        nav a {
+          margin-left: 25px;
+          font-size: 15px;
+        }
+
+        .burger-menu {
+          display: none;
+        }
+
+        /* Grid Komparasi Dua Sisi */
+        .split-section {
+          grid-template-columns: 1fr 1fr;
+          text-align: left;
+          padding: 140px 8% 40px 8%;
+        }
+
+        .section-text {
+          text-align: left;
+        }
+
+        /* Khusus Sektor About Us: Visual Kiri, Teks Kanan */
+        .about-us .section-visual {
+          grid-column: 1;
+          grid-row: 1;
+        }
+        .about-us .section-text {
+          grid-column: 2;
+          grid-row: 1;
+        }
+
+        .section-text h1 {
+          font-size: 52px;
+        }
+        .section-text h2 {
+          font-size: 42px;
+        }
+
+        .phone-mockup {
+          width: 230px;
+          height: 460px;
+        }
+
+        .team-carousel-wrapper {
+          width: 320px;
+          height: 420px;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .carousel-slide {
+          min-width: 33.33%;
+        }
+
+        .features h2,
+        .screenshots h2,
+        .bottom-cta h2 {
+          font-size: 32px;
+        }
+
+        footer {
+          display: flex;
+          padding-inline: 5%;
+          justify-content: space-between;
+        }
+
+        footer .love {
+          margin-top: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="#" class="logo">📝 Daily Notes</a>
+      <nav id="navMenu">
+        <a href="#fitur">Fitur</a>
+        <a href="#galeri">Galeri</a>
+        <a href="#about">Tentang Kami</a>
+        <a class="navDownload" href="#unduh">Unduh</a>
+      </nav>
+      <div class="burger-menu" id="burgerBtn">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <section class="split-section hero">
+      <div class="section-text hero-left">
+        <h1>Ruang Nyaman Untuk <span>Jurnal Harianmu</span></h1>
+        <p>
+          Catat kegiatan Anda, Ungkapkan perasaan, dan amankan privasi pikiran
+          Anda dalam balutan desain yang estetik.
+        </p>
+        <a href="LINK_DOWNLOAD" class="btn-download">
+          <i class="fa-solid fa-download"></i> Unduh Aplikasi
+        </a>
+      </div>
+      <div class="section-visual hero-right">
+        <div class="mockup-container">
+          <div class="phone-mockup">
+            <div class="phone-screen">
+              <img src="assets/images/MainIMG.webp" alt="MainIMG" />
+            </div>
+          </div>
+          <div class="app-logo-badge">
+            <img src="assets/images/DailyNotes.webp" height="90" alt="" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="fitur">
+      <h2>Fitur Utama Daily Notes</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="fa-solid fa-display"></i>
+          <h3>UI yang Sederhana</h3>
+          <p>
+            Rasakan kesederhanaan yang memanjakan Anda dalam mengelola catatan.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class="fa-solid fa-file-pen"></i>
+          <h3>Keutamaan Fungsi</h3>
+          <p>
+            Tulis, lihat, ubah, atau hapus catatan Anda dengan cepat dan
+            praktis.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class="fa-regular fa-face-grin-stars"></i>
+          <h3>Coming Soon!</h3>
+          <p>
+            Nantikan fitur-fitur baru yang akan lebih memudahkan Anda dalam
+            mengelola catatan!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="screenshots" id="galeri">
+      <h2>Tampilan Aplikasi</h2>
+      <div class="carousel-container">
+        <button class="carousel-btn carousel-btn-left" id="prevBtn">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="carousel-track-container">
+          <div class="carousel-track" id="track">
+            <div class="carousel-slide">
+              <div class="screenshot-img">
+                <img src="assets/images/MainIMG.webp" alt="MainIMG" />
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="screenshot-img">
+                <img src="assets/images/AddIMG.webp" alt="AddIMG" />
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="screenshot-img">
+                <img src="assets/images/EditIMG.webp" alt="EditIMG" />
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="screenshot-img">
+                <img src="assets/images/DeleteIMG.webp" alt="DeleteIMG" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-btn carousel-btn-right" id="nextBtn">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <section class="split-section about-us" id="about">
+      <div class="section-visual">
+        <div class="team-carousel-wrapper">
+          <div class="team-track-container">
+            <div class="team-track" id="teamTrack">
+              <div class="team-slide">
+                <div class="team-photo-frame">
+                  <img src="assets/images/teams/Ari.webp" alt="" />
+                </div>
+                <h4>M. Ari Zainal M.</h4>
+                <p>Developer</p>
+                <p>
+                  <a href="https://www.instagram.com/arizm258/" target="_blank"
+                    >@arizm258</a
+                  >
+                </p>
+              </div>
+              <div class="team-slide">
+                <div class="team-photo-frame">
+                  <img src="assets/images/teams/Afriyan.webp" alt="" />
+                </div>
+                <h4>Muhamad Afriyan L.</h4>
+                <p>UI/UX Designer</p>
+                <p>
+                  <a href="https://www.instagram.com/iy4nzzzz_/" target="_blank"
+                    >@iy4nzzzz_/</a
+                  >
+                </p>
+              </div>
+              <div class="team-slide">
+                <div class="team-photo-frame">
+                  <img src="assets/images/teams/Dimas.webp" alt="" />
+                </div>
+                <h4>Dimas Teristian S.</h4>
+                <p>UI/UX Designer</p>
+                <p>
+                  <a
+                    href="https://www.instagram.com/teristian_/"
+                    target="_blank"
+                    >@teristian_</a
+                  >
+                </p>
+              </div>
+              <div class="team-slide">
+                <div class="team-photo-frame">
+                  <img src="assets/images/teams/Nizar.webp" alt="" />
+                </div>
+                <h4>Nizar Mubarak A.</h4>
+                <p>QA Tester</p>
+                <p>
+                  <a href="https://www.instagram.com/wyrmjay_/" target="_blank"
+                    >@wyrmjay_</a
+                  >
+                </p>
+              </div>
+              <div class="team-slide">
+                <div class="team-photo-frame">
+                  <img src="assets/images/teams/Tantri.webp" alt="" />
+                </div>
+                <h4>Tantri Indriyani</h4>
+                <p>Project Documentation</p>
+                <p>
+                  <a
+                    href="https://www.instagram.com/tantrindryni/"
+                    target="_blank"
+                    >@tantrindryni</a
+                  >
+                </p>
+              </div>
+              <div class="team-slide">
+                <div class="team-photo-frame">
+                  <img src="assets/images/teams/Sindi.webp" alt="" />
+                </div>
+                <h4>Sindi Nurjanah</h4>
+                <p>Project Documentation</p>
+                <p>
+                  <a href="https://www.instagram.com/fmosnd/" target="_blank"
+                    >@fmosnd</a
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="team-dots" id="teamDots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-text">
+        <h2>Dibuat Oleh <span>Tim Kreatif</span></h2>
+        <p>
+          Daily Notes dikembangkan oleh sekelompok pelajar muda yang peduli akan
+          pentingnya mengabadikan kegiatan atau peristiwa setiap hari. Kami
+          berkomitmen menyajikan aplikasi jurnal yang stabil, aman, dan
+          memanjakan mata.
+        </p>
+      </div>
+    </section>
+
+    <section class="bottom-cta" id="unduh">
+      <h2>Mulai Jurnal Pertamamu Hari Ini</h2>
+      <p>
+        Unduh Daily Notes secara aman dan gratis langsung ke perangkat Android
+        Anda.
+      </p>
+      <a href="LINK_DOWNLOAD" class="btn-download">
+        <i class="fa-solid fa-cloud-arrow-down"></i> Unduh Sekarang (.APK)
+      </a>
+    </section>
+
+    <div class="image-modal" id="imageModal">
+      <span class="modal-close" id="modalClose">&times;</span>
+      <img class="modal-content" id="modalImg" alt="Detil Screenshot" />
+    </div>
+
+    <footer>
+      <p>&copy; 2026 Daily Notes. Semua Hak Dilindungi Undang-Undang.</p>
+      <p class="love">Dibuat dengan 💖 oleh Tim Daily Notes</p>
+    </footer>
+
+    <script>
+      // 1. ENGINE BURGER MENU
+      const overlay = document.getElementById("navOverlay");
+      const burgerBtn = document.getElementById("burgerBtn");
+      const navMenu = document.getElementById("navMenu");
+      const navLinks = document.querySelectorAll("nav a");
+
+      burgerBtn.addEventListener("click", () => {
+        overlay.classList.toggle("active");
+        navMenu.classList.toggle("nav-active");
+        burgerBtn.classList.toggle("burger-toggle");
+      });
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          overlay.classList.remove("active");
+          navMenu.classList.remove("nav-active");
+          burgerBtn.classList.remove("burger-toggle");
+        });
+      });
+
+      overlay.addEventListener("click", () => {
+        overlay.classList.remove("active");
+        navMenu.classList.remove("nav-active");
+        burgerBtn.classList.remove("burger-toggle");
+      });
+
+      // 2. ENGINE CAROUSEL TIM (ABOUT US)
+      const teamTrack = document.getElementById("teamTrack");
+      const teamSlides = document.querySelectorAll(".team-slide");
+      const teamDots = document.querySelectorAll(".team-dots .dot");
+      let teamIndex = 0;
+      const TEAM_SLIDE_DELAY = 3500;
+
+      function updateTeamCarousel() {
+        const width = teamSlides[0].getBoundingClientRect().width;
+        teamTrack.style.transform = `translateX(-${teamIndex * width}px)`;
+
+        teamDots.forEach((dot, i) => {
+          if (i === teamIndex) dot.classList.add("active");
+          else dot.classList.remove("active");
+        });
+      }
+
+      let teamAutoSlide = setInterval(() => {
+        teamIndex = (teamIndex + 1) % teamSlides.length;
+        updateTeamCarousel();
+      }, TEAM_SLIDE_DELAY);
+
+      // 3. ENGINE CAROUSEL SCREENSHOT
+      const track = document.getElementById("track");
+      const nextBtn = document.getElementById("nextBtn");
+      const prevBtn = document.getElementById("prevBtn");
+      const slides = document.querySelectorAll(".carousel-slide");
+
+      let index = 0;
+      const AUTO_SLIDE_DELAY = 4000;
+      const RESUME_DELAY = 1000;
+
+      let autoSlide;
+      let resumeTimeout;
+
+      function getSlidesPerView() {
+        return window.innerWidth >= 768 ? 3 : 1;
+      }
+
+      function updateCarousel() {
+        const width = slides[0].getBoundingClientRect().width;
+        track.style.transform = `translateX(-${index * width}px)`;
+      }
+
+      function nextSlide() {
+        const slidesPerView = getSlidesPerView();
+        const maxIndex = slides.length - slidesPerView;
+
+        if (index >= maxIndex) {
+          index = 0;
+        } else {
+          index++;
+        }
+        updateCarousel();
+      }
+
+      function prevSlide() {
+        const slidesPerView = getSlidesPerView();
+        const maxIndex = slides.length - slidesPerView;
+
+        if (index <= 0) {
+          index = maxIndex;
+        } else {
+          index--;
+        }
+        updateCarousel();
+      }
+
+      function startAutoSlide() {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(() => {
+          nextSlide();
+        }, AUTO_SLIDE_DELAY);
+      }
+
+      function stopAutoSlide() {
+        clearInterval(autoSlide);
+      }
+
+      function handleUserInteraction(callback) {
+        stopAutoSlide();
+        callback();
+        clearTimeout(resumeTimeout);
+        resumeTimeout = setTimeout(() => {
+          startAutoSlide();
+        }, RESUME_DELAY);
+      }
+
+      nextBtn.addEventListener("click", () => {
+        handleUserInteraction(nextSlide);
+      });
+
+      prevBtn.addEventListener("click", () => {
+        handleUserInteraction(prevSlide);
+      });
+
+      // GLOBAL RESIZE HANDLER
+      window.addEventListener("resize", () => {
+        const slidesPerView = getSlidesPerView();
+        const maxIndex = slides.length - slidesPerView;
+        if (index > maxIndex) {
+          index = maxIndex;
+        }
+
+        updateCarousel();
+        updateTeamCarousel();
+      });
+
+      // INIT CAROUSEL
+      updateCarousel();
+      updateTeamCarousel();
+      startAutoSlide();
+
+      // 4. MOTION SCROLL ENGINE
+      function revealFeatures() {
+        let cards = document.querySelectorAll(".feature-card");
+        let windowHeight = window.innerHeight;
+        cards.forEach((card) => {
+          let cardTop = card.getBoundingClientRect().top;
+          if (cardTop < windowHeight - 100) {
+            card.classList.add("active");
+          }
+        });
+      }
+      window.addEventListener("scroll", revealFeatures);
+      window.addEventListener("load", revealFeatures);
+
+      // 5. ENGINE MODAL DETAIL GAMBAR SCREENSHOT
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("modalImg");
+      const closeBtn = document.getElementById("modalClose");
+      const screenshotCards = document.querySelectorAll(".screenshot-img img");
+
+      screenshotCards.forEach((img) => {
+        img.addEventListener("click", () => {
+          modal.classList.add("show");
+          modalImg.src = img.src;
+          stopAutoSlide(); // Hentikan sejenak carousel saat modal aktif
+        });
+      });
+
+      function closeModal() {
+        modal.classList.remove("show");
+        startAutoSlide(); // Jalankan kembali carousel saat modal ditutup
+      }
+
+      closeBtn.addEventListener("click", closeModal);
+
+      // Menutup modal jika pengguna mengklik area luar gambar (overlay)
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Menutup modal menggunakan tombol 'Escape' pada keyboard
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("show")) {
+          closeModal();
+        }
+      });
+    </script>
+  </body>
+</html>
