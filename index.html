@@ -742,10 +742,7 @@
           Catat kegiatan Anda, Ungkapkan perasaan, dan amankan privasi pikiran
           Anda dalam balutan desain yang estetik.
         </p>
-        <a
-          href="https://github.com/M-Ari-ZM/DailyNotes/releases/download/v5.1/Daily.Notes.v5.1.apk"
-          class="btn-download"
-        >
+        <a href="#" class="btn-download">
           <i class="fa-solid fa-download"></i> Unduh Aplikasi
         </a>
         <div class="download-stats" id="hero-stats">
@@ -941,10 +938,7 @@
         Unduh Daily Notes secara aman dan gratis langsung ke perangkat Android
         Anda.
       </p>
-      <a
-        href="https://github.com/M-Ari-ZM/DailyNotes/releases/download/v5.1/Daily.Notes.v5.1.apk"
-        class="btn-download"
-      >
+      <a href="#" class="btn-download">
         <i class="fa-solid fa-cloud-arrow-down"></i> Unduh Sekarang (.APK)
       </a>
       <div class="download-stats" id="bottom-stats">
@@ -1157,6 +1151,8 @@
         const username = "M-Ari-ZM";
         const repo = "DailyNotes";
 
+        let apk =
+          "https://github.com/M-Ari-ZM/DailyNotes/releases/download/v1.0.0/Daily.Notes.v1.0.0.apk";
         const apiUrl = `https://api.github.com/repos/${username}/${repo}/releases`;
 
         try {
@@ -1169,13 +1165,24 @@
 
           if (data.length > 0) {
             const latestRelease = data[0]; // Mengambil rilis paling terbaru
-            const version = latestRelease.tag_name; // Mengambil info versi (ex: v5.1.0)
+            const version = latestRelease.tag_name; // Mengambil info versi
 
+            let latestApkUrl = "";
             let totalDownloads = 0;
 
             // Menghitung total download dari semua file/assets yang ada di rilis tersebut
             latestRelease.assets.forEach((asset) => {
               totalDownloads += asset.download_count;
+
+              if (asset.name.endsWith(".apk")) {
+                latestApkUrl = asset.browser_download_url;
+              }
+            });
+
+            const downloadButtons = document.querySelectorAll(".btn-download");
+
+            downloadButtons.forEach((btn) => {
+              btn.href = latestApkUrl;
             });
 
             // Format teks yang akan ditampilkan
