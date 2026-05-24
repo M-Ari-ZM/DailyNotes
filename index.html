@@ -742,10 +742,7 @@
           Catat kegiatan Anda, Ungkapkan perasaan, dan amankan privasi pikiran
           Anda dalam balutan desain yang estetik.
         </p>
-        <a
-          href="https://github.com/M-Ari-ZM/DailyNotes/releases/download/v1.0.0/Daily.Notes.v1.0.0.apk"
-          class="btn-download"
-        >
+        <a href="#" class="btn-download" id="hero-download">
           <i class="fa-solid fa-download"></i> Unduh Aplikasi
         </a>
         <div class="download-stats" id="hero-stats">
@@ -941,10 +938,7 @@
         Unduh Daily Notes secara aman dan gratis langsung ke perangkat Android
         Anda.
       </p>
-      <a
-        href="https://github.com/M-Ari-ZM/DailyNotes/releases/download/v1.0.0/Daily.Notes.v1.0.0.apk"
-        class="btn-download"
-      >
+      <a href="#" class="btn-download" id="bottom-download">
         <i class="fa-solid fa-cloud-arrow-down"></i> Unduh Sekarang (.APK)
       </a>
       <div class="download-stats" id="bottom-stats">
@@ -1151,55 +1145,71 @@
         }
       });
 
-      // 6. ENGINE GITHUB API (STATS DOWNLOAD)
+      // 6. ENGINE GITHUB API (STATS & LINK DOWNLOAD OTOMATIS)
       async function getGitHubReleases() {
-        // Ubah sesuai dengan username dan nama repositori GitHub kamu
         const username = "M-Ari-ZM";
         const repo = "DailyNotes";
-
-        let apk =
-          "https://github.com/M-Ari-ZM/DailyNotes/releases/download/v1.0.0/Daily.Notes.v1.0.0.apk";
         const apiUrl = `https://api.github.com/repos/${username}/${repo}/releases`;
+
+        // Ambil semua elemen HTML yang dibutuhkan
+        const heroBtn = document.getElementById("hero-download");
+        const bottomBtn = document.getElementById("bottom-download");
+        const heroStats = document.getElementById("hero-stats");
+        const bottomStats = document.getElementById("bottom-stats");
 
         try {
           const response = await fetch(apiUrl);
-
-          // Jika respons gagal (misal repo typo atau private)
           if (!response.ok) throw new Error("Gagal mengambil data dari GitHub");
 
           const data = await response.json();
 
           if (data.length > 0) {
-            const latestRelease = data[0]; // Mengambil rilis paling terbaru
-            const version = latestRelease.tag_name; // Mengambil info versi
+            const latestRelease = data[0];
+            const version = latestRelease.tag_name;
 
             let totalDownloads = 0;
+            let apkDownloadUrl = "";
 
-            // Menghitung total download dari semua file/assets yang ada di rilis tersebut
+            // Loop untuk menghitung total download dan mencari file berisensi .apk
             latestRelease.assets.forEach((asset) => {
               totalDownloads += asset.download_count;
+
+              // Memastikan file yang diambil adalah file aplikasi Android (.apk)
+              if (asset.name.endsWith(".apk")) {
+                apkDownloadUrl = asset.browser_download_url;
+              }
             });
 
-            // Format teks yang akan ditampilkan
-            const statsText = `Versi ${version} • Telah diunduh ${totalDownloads} kali`;
+            // Jika file APK ditemukan di GitHub Release, pasang link-nya ke tombol
+            if (apkDownloadUrl) {
+              heroBtn.href = apkDownloadUrl;
+              bottomBtn.href = apkDownloadUrl;
+            } else {
+              // Jika rilis ada tapi tidak ada file .apk di dalamnya, arahkan ke halaman rilis umum
+              heroBtn.href = latestRelease.html_url;
+              bottomBtn.href = latestRelease.html_url;
+            }
 
-            // Masukkan teks ke elemen HTML di Hero dan Bottom CTA
-            document.getElementById("hero-stats").innerText = statsText;
-            document.getElementById("bottom-stats").innerText = statsText;
+            // Tampilkan statistik versi dan unduhan
+            const statsText = `Versi ${version} • Telah diunduh ${totalDownloads} kali`;
+            heroStats.innerText = statsText;
+            bottomStats.innerText = statsText;
           } else {
-            // Jika belum ada rilis resmi di Github
-            document.getElementById("hero-stats").innerText =
-              "Belum ada rilis versi resmi.";
-            document.getElementById("bottom-stats").innerText =
-              "Belum ada rilis versi resmi.";
+            // Jika repositori belum memiliki rilis sama sekali
+            heroStats.innerText = "Belum ada rilis versi resmi.";
+            bottomStats.innerText = "Belum ada rilis versi resmi.";
           }
         } catch (error) {
           console.error("Error API:", error);
-          // Jika gagal mengambil API (misal user offline), tampilkan teks fallback aman
-          document.getElementById("hero-stats").innerText =
-            "Versi Terbaru v1.0.0";
-          document.getElementById("bottom-stats").innerText =
-            "Versi Terbaru v1.0.0";
+
+          // Sesuai permintaan: jika API gagal, tampilkan pesan error ini
+          heroStats.innerText = "Gagal memuat versi terbaru";
+          bottomStats.innerText = "Gagal memuat versi terbaru";
+
+          // Fallback aman: Tautan tombol diarahkan langsung ke halaman utama repositori agar user tidak mendownload link kosong (#)
+          const fallbackUrl = `https://github.com/${username}/${repo}`;
+          heroBtn.href = fallbackUrl;
+          bottomBtn.href = fallbackUrl;
         }
       }
 
