@@ -742,7 +742,10 @@
           Catat kegiatan Anda, Ungkapkan perasaan, dan amankan privasi pikiran
           Anda dalam balutan desain yang estetik.
         </p>
-        <a href="#" class="btn-download">
+        <a
+          href="https://github.com/M-Ari-ZM/DailyNotes/releases/download/v1.0.0/Daily.Notes.v1.0.0.apk"
+          class="btn-download"
+        >
           <i class="fa-solid fa-download"></i> Unduh Aplikasi
         </a>
         <div class="download-stats" id="hero-stats">
@@ -938,7 +941,10 @@
         Unduh Daily Notes secara aman dan gratis langsung ke perangkat Android
         Anda.
       </p>
-      <a href="#" class="btn-download">
+      <a
+        href="https://github.com/M-Ari-ZM/DailyNotes/releases/download/v1.0.0/Daily.Notes.v1.0.0.apk"
+        class="btn-download"
+      >
         <i class="fa-solid fa-cloud-arrow-down"></i> Unduh Sekarang (.APK)
       </a>
       <div class="download-stats" id="bottom-stats">
@@ -1147,55 +1153,53 @@
 
       // 6. ENGINE GITHUB API (STATS DOWNLOAD)
       async function getGitHubReleases() {
+        // Ubah sesuai dengan username dan nama repositori GitHub kamu
         const username = "M-Ari-ZM";
         const repo = "DailyNotes";
 
-        const apiUrl = `https://api.github.com/repos/${username}/${repo}/releases/latest`;
+        let apk =
+          "https://github.com/M-Ari-ZM/DailyNotes/releases/download/v1.0.0/Daily.Notes.v1.0.0.apk";
+        const apiUrl = `https://api.github.com/repos/${username}/${repo}/releases`;
 
         try {
           const response = await fetch(apiUrl);
 
-          if (!response.ok) {
-            throw new Error("Gagal mengambil data GitHub");
+          // Jika respons gagal (misal repo typo atau private)
+          if (!response.ok) throw new Error("Gagal mengambil data dari GitHub");
+
+          const data = await response.json();
+
+          if (data.length > 0) {
+            const latestRelease = data[0]; // Mengambil rilis paling terbaru
+            const version = latestRelease.tag_name; // Mengambil info versi
+
+            let totalDownloads = 0;
+
+            // Menghitung total download dari semua file/assets yang ada di rilis tersebut
+            latestRelease.assets.forEach((asset) => {
+              totalDownloads += asset.download_count;
+            });
+
+            // Format teks yang akan ditampilkan
+            const statsText = `Versi ${version} • Telah diunduh ${totalDownloads} kali`;
+
+            // Masukkan teks ke elemen HTML di Hero dan Bottom CTA
+            document.getElementById("hero-stats").innerText = statsText;
+            document.getElementById("bottom-stats").innerText = statsText;
+          } else {
+            // Jika belum ada rilis resmi di Github
+            document.getElementById("hero-stats").innerText =
+              "Belum ada rilis versi resmi.";
+            document.getElementById("bottom-stats").innerText =
+              "Belum ada rilis versi resmi.";
           }
-
-          const latestRelease = await response.json();
-
-          const version = latestRelease.tag_name;
-
-          let totalDownloads = 0;
-          let latestApkUrl = "";
-
-          // Cari file APK + hitung total download
-          latestRelease.assets.forEach((asset) => {
-            totalDownloads += asset.download_count;
-
-            // Ambil file APK pertama
-            if (asset.name.endsWith(".apk")) {
-              latestApkUrl = asset.browser_download_url;
-            }
-          });
-
-          // Update teks statistik
-          const statsText = `Versi ${version} • Telah diunduh ${totalDownloads} kali`;
-
-          document.getElementById("hero-stats").innerText = statsText;
-          document.getElementById("bottom-stats").innerText = statsText;
-
-          // Update semua tombol download
-          const downloadButtons = document.querySelectorAll(".btn-download");
-
-          downloadButtons.forEach((btn) => {
-            btn.href = latestApkUrl;
-          });
         } catch (error) {
           console.error("Error API:", error);
-
+          // Jika gagal mengambil API (misal user offline), tampilkan teks fallback aman
           document.getElementById("hero-stats").innerText =
-            "Gagal memuat versi terbaru";
-
+            "Versi Terbaru v1.0.0";
           document.getElementById("bottom-stats").innerText =
-            "Gagal memuat versi terbaru";
+            "Versi Terbaru v1.0.0";
         }
       }
 
