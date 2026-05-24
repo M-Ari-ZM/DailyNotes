@@ -306,6 +306,13 @@
         transform: translateY(-3px);
       }
 
+      .download-stats {
+        font-size: 13px;
+        color: #8a7678; /* Warna abu-abu kecokelatan yang lembut */
+        margin-top: 10px;
+        font-weight: 400;
+      }
+
       /* --- FITUR-FITUR APLIKASI --- */
       .features {
         padding: 80px 8%;
@@ -741,6 +748,9 @@
         >
           <i class="fa-solid fa-download"></i> Unduh Aplikasi
         </a>
+        <div class="download-stats" id="hero-stats">
+          Memuat informasi versi...
+        </div>
       </div>
       <div class="section-visual hero-right">
         <div class="mockup-container">
@@ -937,6 +947,9 @@
       >
         <i class="fa-solid fa-cloud-arrow-down"></i> Unduh Sekarang (.APK)
       </a>
+      <div class="download-stats" id="hero-stats">
+        Memuat informasi versi...
+      </div>
     </section>
 
     <div class="image-modal" id="imageModal">
@@ -1137,6 +1150,59 @@
           closeModal();
         }
       });
+
+      // 6. ENGINE GITHUB API (STATS DOWNLOAD)
+      async function getGitHubReleases() {
+        // Ubah sesuai dengan username dan nama repositori GitHub kamu
+        const username = "M-Ari-ZM";
+        const repo = "DailyNotes";
+
+        const apiUrl = `https://api.github.com/repos/${username}/${repo}/releases`;
+
+        try {
+          const response = await fetch(apiUrl);
+
+          // Jika respons gagal (misal repo typo atau private)
+          if (!response.ok) throw new Error("Gagal mengambil data dari GitHub");
+
+          const data = await response.json();
+
+          if (data.length > 0) {
+            const latestRelease = data[0]; // Mengambil rilis paling terbaru
+            const version = latestRelease.tag_name; // Mengambil info versi (ex: v5.1.0)
+
+            let totalDownloads = 0;
+
+            // Menghitung total download dari semua file/assets yang ada di rilis tersebut
+            latestRelease.assets.forEach((asset) => {
+              totalDownloads += asset.download_count;
+            });
+
+            // Format teks yang akan ditampilkan
+            const statsText = `Versi ${version} • Telah diunduh ${totalDownloads} kali`;
+
+            // Masukkan teks ke elemen HTML di Hero dan Bottom CTA
+            document.getElementById("hero-stats").innerText = statsText;
+            document.getElementById("bottom-stats").innerText = statsText;
+          } else {
+            // Jika belum ada rilis resmi di Github
+            document.getElementById("hero-stats").innerText =
+              "Belum ada rilis versi resmi.";
+            document.getElementById("bottom-stats").innerText =
+              "Belum ada rilis versi resmi.";
+          }
+        } catch (error) {
+          console.error("Error API:", error);
+          // Jika gagal mengambil API (misal user offline), tampilkan teks fallback aman
+          document.getElementById("hero-stats").innerText =
+            "Versi Terbaru v5.1";
+          document.getElementById("bottom-stats").innerText =
+            "Versi Terbaru v5.1";
+        }
+      }
+
+      // Jalankan fungsi API setelah halaman web selesai dimuat sepenuhnya
+      window.addEventListener("DOMContentLoaded", getGitHubReleases);
     </script>
   </body>
 </html>
