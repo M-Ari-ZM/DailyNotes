@@ -1172,38 +1172,41 @@
           const data = await response.json();
 
           if (data.length > 0) {
+            // 1. Informasi VERSI tetap mengambil yang paling terbaru (paling atas)
             const latestRelease = data[0];
             const version = latestRelease.tag_name;
-
-            let totalDownloads = 0;
             let apkDownloadUrl = "";
 
-            // Loop untuk menghitung total download dan mencari file berisensi .apk
+            // Cari file APK khusus untuk versi terbaru agar tombol tidak salah download versi jadul
             latestRelease.assets.forEach((asset) => {
-              totalDownloads += asset.download_count;
-
-              // Memastikan file yang diambil adalah file aplikasi Android (.apk)
               if (asset.name.endsWith(".apk")) {
                 apkDownloadUrl = asset.browser_download_url;
               }
             });
 
-            // Jika file APK ditemukan di GitHub Release, pasang link-nya ke tombol
+            // Pasang tautan ke tombol unduh
             if (apkDownloadUrl) {
               heroBtn.href = apkDownloadUrl;
               bottomBtn.href = apkDownloadUrl;
             } else {
-              // Jika rilis ada tapi tidak ada file .apk di dalamnya, arahkan ke halaman rilis umum
               heroBtn.href = latestRelease.html_url;
               bottomBtn.href = latestRelease.html_url;
             }
 
-            // Tampilkan statistik versi dan unduhan
+            // 2. Menghitung TOTAL DOWNLOAD dari SEMUA versi yang pernah dirilis
+            let totalDownloads = 0;
+
+            data.forEach((release) => {
+              release.assets.forEach((asset) => {
+                totalDownloads += asset.download_count;
+              });
+            });
+
+            // Tampilkan hasil akumulasi ke HTML
             const statsText = `Versi ${version} • Telah diunduh ${totalDownloads} kali`;
             heroStats.innerText = statsText;
             bottomStats.innerText = statsText;
           } else {
-            // Jika repositori belum memiliki rilis sama sekali
             heroStats.innerText = "Belum ada rilis versi resmi.";
             bottomStats.innerText = "Belum ada rilis versi resmi.";
           }
