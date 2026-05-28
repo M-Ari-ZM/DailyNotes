@@ -50,7 +50,7 @@
 
 Atau
 1. Kunjungi **[Website Resmi](https://daily-notes-web.vercel.app)** kami.
-2. Klik tombol "Unduh Apikasi".
+2. Klik tombol "Unduh Aplikasi".
 3. Alihkan izin instalasi perangkat kamu untuk mengizinkan "Instal aplikasi dari sumber tidak dikenal" jika diminta.
 4. Buka file APK dan jalankan instalasi.
 
