@@ -12,6 +12,7 @@
 
 - **📝 Personal Journaling:** Catat kegiatan harian dengan antarmuka yang intuitif dan responsif.
 - **💾 Local Storage (SQLite):** Catatan disimpan dengan aman di dalam penyimpanan lokal perangkat, memungkinkan akses cepat tanpa koneksi internet.
+- **🗃 Functional Priority**: Tulis, lihat, ubah, atau hapus catatan kamu dengan cepat dan praktis.
 - **🌗 Dark Mode Support:** Mendukung tema sistem otomatis (Light/Dark Mode) untuk kenyamanan membaca sesuai preferensi kamu.
 - **🎨 Modern UI/UX:** Menggunakan implementasi **Material Design 3** dengan komponen `CardView` dan `ShapeableImageView` yang simpel, bersih, dan elegan.
 
