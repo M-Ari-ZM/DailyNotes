@@ -43,9 +43,14 @@
 
 ## 🚀 Cara Instalasi
 
-### Menggunakan APK (Pengguna)
 1. Buka halaman **[Releases](https://github.com/M-Ari-ZM/DailyNotes/releases)** di repositori ini.
 2. Unduh file `.apk` versi terbaru.
+3. Alihkan izin instalasi perangkat kamu untuk mengizinkan "Instal aplikasi dari sumber tidak dikenal" jika diminta.
+4. Buka file APK dan jalankan instalasi.
+
+Atau
+1. Kunjungi **[website resmi](https://daily-notes-web.vercel.app)** kami.
+2. Klik tombol "Unduh Apikasi".
 3. Alihkan izin instalasi perangkat kamu untuk mengizinkan "Instal aplikasi dari sumber tidak dikenal" jika diminta.
 4. Buka file APK dan jalankan instalasi.
 
