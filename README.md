@@ -61,14 +61,18 @@ Atau
 
 | Nama | Peran | Instagram |
 |---|---|---|
-| **M. Ari Zainal Mutaqin** | Lead Developer | [@username](https://instagram.com/username) |
-| **Muhamad Afriyan L.** | UI/UX Designer | [@username](https://instagram.com/username) |
-| **Dimas Teristian S.** | UI/UX Designer | [@username](https://instagram.com/username) |
-| **Nizar Mubarak A.** | QA Tester | [@username](https://instagram.com/username) |
-| **Tantri Indriyani** | Project Documentation | [@username](https://instagram.com/username) |
-| **Sindi Nurjanah** | Project Documentation | [@username](https://instagram.com/username) |
+| **M. Ari Zainal Mutaqin** | Lead Developer | [@arizm258](https://www.instagram.com/arizm258/) |
+| **Muhamad Afriyan L.** | UI/UX Designer | [@iy4nzzzz_](https://www.instagram.com/iy4nzzzz_/) |
+| **Dimas Teristian S.** | UI/UX Designer | [@teristian_](https://www.instagram.com/teristian_/) |
+| **Nizar Mubarak A.** | QA Tester | [@wyrmjay_](https://www.instagram.com/wyrmjay_/) |
+| **Tantri Indriyani** | Project Documentation | [@tantrindryni](https://www.instagram.com/tantrindryni/) |
+| **Sindi Nurjanah** | Project Documentation | [@fmosnd](https://www.instagram.com/fmosnd/) |
 
 ---
+
+<p align="center">
+## Jika menemukan bug atau mempunyai saran, jangan sungkan untuk beritahu kami!
+</p>
 
 <p align="center">
 Dibuat dengan 💖 oleh Tim Daily Notes
