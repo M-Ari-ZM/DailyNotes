@@ -71,7 +71,7 @@ Atau
 ---
 
 <p align="center">
-## Jika menemukan bug atau mempunyai saran, jangan sungkan untuk beritahu kami!
+<strong>Jika menemukan bug atau mempunyai saran, jangan sungkan untuk beritahu kami!</strong>
 </p>
 
 <p align="center">
