@@ -36,9 +36,9 @@
 
 ## 📸 Dokumentasi Aplikasi
 
-| Splash Screen | Main Dashboard | Dark Mode | About Us |
+| Beranda | Tambah Catatan | Edit Catatan | Hapus Catatan |
 | :---: | :---: | :---: | :---: |
-| <img src="screenshots/splash.png" width="180"> | <img src="screenshots/main.png" width="180"> | <img src="screenshots/dark.png" width="180"> | <img src="screenshots/about.png" width="180"> |
+| <img src="assets/images/MainIMG.webp" width="180"> | <img src="assets/images/AddIMG.webp" width="180"> | <img src="assets/images/EditIMG.webp" width="180"> | <img src="assets/images/DeleteIMG.webp" width="180"> |
 
 ---
 
