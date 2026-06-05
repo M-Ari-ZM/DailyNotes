@@ -61,7 +61,7 @@ Atau
 
 | Nama | Peran | Instagram |
 |---|---|---|
-| **M. Ari Zainal Mutaqin** | Lead Developer | [@arizm258](https://www.instagram.com/arizm258/) |
+| **M. Ari Zainal Mutaqin** | Developer | [@arizm258](https://www.instagram.com/arizm258/) |
 | **Muhamad Afriyan L.** | UI/UX Designer | [@iy4nzzzz_](https://www.instagram.com/iy4nzzzz_/) |
 | **Dimas Teristian S.** | UI/UX Designer | [@teristian_](https://www.instagram.com/teristian_/) |
 | **Nizar Mubarak A.** | QA Tester | [@wyrmjay_](https://www.instagram.com/wyrmjay_/) |
